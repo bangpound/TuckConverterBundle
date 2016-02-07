@@ -1,9 +1,9 @@
 <?php
+
 namespace Tuck\ConverterBundle\Tests\Command;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Tuck\ConverterBundle\Command\ConvertCommand;
 use Mockery;
 use Tuck\ConverterBundle\ConfigFormatConverter;
@@ -19,7 +19,7 @@ class ConvertCommandTest extends \PHPUnit_Framework_TestCase
             array(
                 'format' => 'yml',
                 'file' => __DIR__.'/../../Resources/mock_config/simple.xml',
-                '--output' => true
+                '--output' => true,
             )
         );
 
@@ -30,8 +30,10 @@ class ConvertCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Helper to create a command
-     * @param  array         $arguments
+     * Helper to create a command.
+     *
+     * @param array $arguments
+     *
      * @return CommandTester
      */
     protected function executeCommand(array $arguments)

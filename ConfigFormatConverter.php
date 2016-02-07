@@ -1,4 +1,5 @@
 <?php
+
 namespace Tuck\ConverterBundle;
 
 use SplFileInfo;
@@ -51,11 +52,13 @@ class ConfigFormatConverter
     }
 
     /**
-     * Convert a service config file from one format to another (xml, yml, etc)
+     * Convert a service config file from one format to another (xml, yml, etc).
      *
-     * @param  SplFileInfo                    $file      The file to convert
-     * @param  string                         $newFormat Format to convert to, given as a file extension
-     * @return string                         Converted config, returned as a raw string
+     * @param SplFileInfo $file      The file to convert
+     * @param string      $newFormat Format to convert to, given as a file extension
+     *
+     * @return string Converted config, returned as a raw string
+     *
      * @throws Exception\UnknownFileException
      */
     public function convertFile(SplFileInfo $file, $newFormat)
@@ -71,11 +74,11 @@ class ConfigFormatConverter
     }
 
     /**
-     * Convert a config represented as a string to some other format
+     * Convert a config represented as a string to some other format.
      *
-     * @param  string $content
-     * @param  string $oldFormat
-     * @param  string $newFormat
+     * @param string $content
+     * @param string $oldFormat
+     * @param string $newFormat
      *
      * @throws \Exception when file conversion fails
      *

@@ -20,9 +20,8 @@
         "phpunit/phpunit": "~3.7"
     },
     "autoload": {
-        "psr-0": {
-            "Tuck\\ConverterBundle": ""
+        "psr-4": {
+            "Tuck\\ConverterBundle\\": ""
         }
-    },
-    "target-dir": "Tuck/ConverterBundle/"
+    }
 }

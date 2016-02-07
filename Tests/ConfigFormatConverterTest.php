@@ -1,4 +1,5 @@
 <?php
+
 namespace Tuck\ConverterBundle\Tests;
 
 use SplFileInfo;
@@ -16,7 +17,8 @@ class ConfigFormatConverterTest extends \PHPUnit_Framework_TestCase
     protected $converter;
 
     /**
-     * A list of files to be removed during teardown
+     * A list of files to be removed during teardown.
+     *
      * @var string[]
      */
     protected $teardownFiles = array();
@@ -75,7 +77,7 @@ class ConfigFormatConverterTest extends \PHPUnit_Framework_TestCase
     /**
      * When converting a string, we have to use a temp file since the symfony
      * loaders have that assumption built in. To prevent flooding the tmp dir
-     * of the online converter, we should ensure the file is removed afterwards
+     * of the online converter, we should ensure the file is removed afterwards.
      */
     public function testTempFileIsCleanedUpAfterConversion()
     {

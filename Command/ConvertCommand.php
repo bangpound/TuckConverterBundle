@@ -1,4 +1,5 @@
 <?php
+
 namespace Tuck\ConverterBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -6,7 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use \SplFileInfo;
+use SplFileInfo;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Tuck\ConverterBundle\Exception\UnknownBundleException;
 use Tuck\ConverterBundle\Exception\EmptyDirectoryException;
@@ -29,11 +31,10 @@ class ConvertCommand extends ContainerAwareCommand
     }
 
     /**
-     * Interactively determine the file and convert it
+     * Interactively determine the file and convert it.
      *
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
-     * @return void
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -48,15 +49,16 @@ class ConvertCommand extends ContainerAwareCommand
         if ($input->getOption('output')) {
             $output->write($newConfig);
         } else {
-            $this->writeToFile($output, $fileToConvert, $newConfig, $newFormat);
+            $this->writeToFile($input, $output, $fileToConvert, $newConfig, $newFormat);
         }
     }
 
     /**
-     * Choose file from cli input or interactively
+     * Choose file from cli input or interactively.
      *
-     * @param  OutputInterface $output
-     * @param  string          $givenFileName
+     * @param OutputInterface $output
+     * @param string          $givenFileName
+     *
      * @return SplFileInfo
      */
     protected function determineFile(OutputInterface $output, $givenFileName)
@@ -72,17 +74,19 @@ class ConvertCommand extends ContainerAwareCommand
     }
 
     /**
-     * Prompt the user to choose the bundle whose config they want to convert
+     * Prompt the user to choose the bundle whose config they want to convert.
      *
-     * @param  OutputInterface        $output
+     * @param OutputInterface $output
+     *
      * @return Bundle
+     *
      * @throws UnknownBundleException
      */
     protected function chooseBundle(OutputInterface $output)
     {
         $bundles = $this->getContainer()->get('kernel')->getBundles();
 
-        $selectedBundle = $this->getHelperSet()->get('dialog')->ask(
+        $selectedBundle = $this->getHelperSet()->get('question')->ask(
             $output,
             '<info>Which bundle\'s config would you like to convert? </info>',
             null,
@@ -97,10 +101,11 @@ class ConvertCommand extends ContainerAwareCommand
     }
 
     /**
+     * @param OutputInterface $output
+     * @param string          $path
      *
-     * @param  OutputInterface         $output
-     * @param  string                  $path
      * @return SplFileInfo
+     *
      * @throws EmptyDirectoryException
      */
     protected function chooseFileInDirectory(OutputInterface $output, $path)
@@ -119,7 +124,7 @@ class ConvertCommand extends ContainerAwareCommand
         }
 
         // Prompt user for which file
-        $fileIndex = $this->getHelperSet()->get('dialog')->select(
+        $fileIndex = $this->getHelperSet()->get('question')->select(
             $output,
             '<info>Which file should be converted? </info>',
             array_map(
@@ -134,24 +139,25 @@ class ConvertCommand extends ContainerAwareCommand
     }
 
     /**
-     * Write the new config to the same directory as the original file
+     * Write the new config to the same directory as the original file.
      *
      * @param OutputInterface $output
      * @param SplFileInfo     $originalFile
      * @param string          $newConfig
      * @param string          $newFormat    The short file name given, like
      */
-    protected function writeToFile(OutputInterface $output, SplFileInfo $originalFile, $newConfig, $newFormat)
+    protected function writeToFile($input, OutputInterface $output, SplFileInfo $originalFile, $newConfig, $newFormat)
     {
         $proposedLocation = $originalFile->getPath().'/services.'.$newFormat;
-        $location = $this->getHelperSet()->get('dialog')->ask(
+        $location = $this->getHelperSet()->get('question')->ask(
+            $input,
             $output,
-            "<info>Where should the new config be written?</info> [{$proposedLocation}] ",
-            $proposedLocation
+            new Question("<info>Where should the new config be written?</info> [{$proposedLocation}] ",
+            $proposedLocation)
         );
 
         if (file_exists($location)
-            && !$this->getHelperSet()->get('dialog')->askConfirmation($output, 'File exists. Overwrite? ')
+            && !$this->getHelperSet()->get('question')->askConfirmation($output, 'File exists. Overwrite? ')
         ) {
             $output->writeln('Aborting...');
 
@@ -161,7 +167,7 @@ class ConvertCommand extends ContainerAwareCommand
         file_put_contents($location, $newConfig);
         $output->writeln(
             "Written! Don't forget to update the DependencyInjection/*Extension class in your bundle to use the new ".
-            "loader class and delete the old config file."
+            'loader class and delete the old config file.'
         );
     }
 }

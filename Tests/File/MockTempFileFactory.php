@@ -14,20 +14,22 @@ use Tuck\ConverterBundle\File\SysTempFileFactory;
 class MockTempFileFactory extends SysTempFileFactory
 {
     /**
-     * Always returns the same file name (provided the same extension is given)
+     * Always returns the same file name (provided the same extension is given).
      *
-     * @param  string $extension
+     * @param string $extension
+     *
      * @return string
      */
     protected function generateFilename($extension)
     {
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'tuck_converter_bundle_test_file.'.$extension;
+        return sys_get_temp_dir().DIRECTORY_SEPARATOR.'tuck_converter_bundle_test_file.'.$extension;
     }
 
     /**
-     * Make the file name accessible so we can use it in unit tests
+     * Make the file name accessible so we can use it in unit tests.
      *
-     * @param  string $extension
+     * @param string $extension
+     *
      * @return string
      */
     public function getMockFilename($extension)

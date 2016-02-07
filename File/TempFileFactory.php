@@ -1,8 +1,9 @@
 <?php
+
 namespace Tuck\ConverterBundle\File;
 
 /**
- * Creates temp files in the System tmp dir
+ * Creates temp files in the System tmp dir.
  *
  * @author Ross Tuck <me@rosstuck.com>
  */
@@ -16,8 +17,9 @@ interface TempFileFactory
      * with some content. If content is written, the file is not rewound before
      * returning.
      *
-     * @param  string|null    $content
-     * @param  string         $extension
+     * @param string|null $content
+     * @param string      $extension
+     *
      * @return \SplFileObject
      */
     public function createFile($content = null, $extension = 'tmp');

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tuck\ConverterBundle\Dumper;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -6,7 +7,7 @@ use Symfony\Component\DependencyInjection\Dumper\DumperInterface;
 use Tuck\ConverterBundle\Exception\UnknownFormatException;
 
 /**
- * Factory for Symfony's standard set of Dumpers
+ * Factory for Symfony's standard set of Dumpers.
  *
  * @author Ross Tuck <me@rosstuck.com>
  */
@@ -24,10 +25,11 @@ class StandardDumperFactory implements DumperFactory
     );
 
     /**
-     * Creates a dumper for use only by the given container
+     * Creates a dumper for use only by the given container.
      *
-     * @param  string           $type
-     * @param  ContainerBuilder $container
+     * @param string           $type
+     * @param ContainerBuilder $container
+     *
      * @return DumperInterface
      */
     public function createDumper($type, ContainerBuilder $container)
@@ -38,9 +40,12 @@ class StandardDumperFactory implements DumperFactory
     }
 
     /**
-     * Get class name based on format's short name
+     * Get class name based on format's short name.
+     *
      * @param $type
+     *
      * @return mixed
+     *
      * @throws UnknownFormatException
      */
     protected function getClassNameByShortType($type)

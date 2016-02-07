@@ -1,4 +1,5 @@
 <?php
+
 namespace Tuck\ConverterBundle\Loader;
 
 use Symfony\Component\Config\FileLocator;
@@ -7,7 +8,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Tuck\ConverterBundle\Exception\UnknownFormatException;
 
 /**
- * Factory for the standard set of loaders Symfony comes with
+ * Factory for the standard set of loaders Symfony comes with.
  *
  * @author Ross Tuck <me@rosstuck.com>
  */
@@ -18,15 +19,16 @@ class StandardLoaderFactory implements LoaderFactory
         'yaml' => 'Symfony\Component\DependencyInjection\Loader\YamlFileLoader',
         'yml' => 'Symfony\Component\DependencyInjection\Loader\YamlFileLoader',
         'php' => 'Symfony\Component\DependencyInjection\Loader\PhpFileLoader',
-        'ini' => 'Symfony\Component\DependencyInjection\Loader\IniFileLoader'
+        'ini' => 'Symfony\Component\DependencyInjection\Loader\IniFileLoader',
     );
 
     /**
-     * Creates a loader for the service config file
+     * Creates a loader for the service config file.
      *
-     * @param  string           $type      The name of the file type, such as xml, yml or php
-     * @param  ContainerBuilder $container
-     * @param  string           $path      The path to the *directory* containing the the file
+     * @param string           $type      The name of the file type, such as xml, yml or php
+     * @param ContainerBuilder $container
+     * @param string           $path      The path to the *directory* containing the the file
+     *
      * @return LoaderInterface
      */
     public function createFileLoader($type, ContainerBuilder $container, $path)
@@ -37,9 +39,12 @@ class StandardLoaderFactory implements LoaderFactory
     }
 
     /**
-     * Get loader class name based on short name
-     * @param  string                 $type
-     * @return string                 Loader class name
+     * Get loader class name based on short name.
+     *
+     * @param string $type
+     *
+     * @return string Loader class name
+     *
      * @throws UnknownFormatException
      */
     protected function getClassNameByShortType($type)

@@ -1,15 +1,19 @@
 <?php
+
 namespace Tuck\ConverterBundle\Exception;
 
 /**
- * Thrown when a user specifies a missing bundle
+ * Thrown when a user specifies a missing bundle.
+ *
  * @author Ross Tuck <me@rosstuck.com>
  */
 class UnknownBundleException extends \Exception
 {
     /**
-     * Factory that formats the message
+     * Factory that formats the message.
+     *
      * @param $bundleName
+     *
      * @return self
      */
     public static function create($bundleName)
